@@ -105,7 +105,7 @@ class Follow extends Auth {
             $profil_following .=
         '<div class="result-user">
             <div class="result-user-cover">
-                <a href="profil.php?id='.$info_user->id_user.'" title="'.$info_user->username.'"><img src="'.$info_user->cover.'" alt="'.$info_user->username.'"></a>
+                <a href="profil.php?id='.$info_user->profil.'" title="'.$info_user->username.'"><img src="'.$info_user->cover.'" alt="'.$info_user->username.'"></a>
             </div>
             <div class="dashboard-data">
                 <a href="profil.php?id='.$info_user->profil.'" title="'.$info_user->username.'"><img src="'.$info_user->avatar.'" alt="'.$info_user->username.'"></a>
@@ -113,12 +113,12 @@ class Follow extends Auth {
 
                 </div>
             <div class="dashboard-user">
-                <a href="profil.php?id='.$info_user->id_user.'" title="'.$info_user->username.'">'.ucfirst($info_user->nickname).'</a>
-                <a href="profil.php?id='.$info_user->id_user.'" title ="">@'.$info_user->username.'</a>
+                <a href="profil.php?id='.$info_user->profil.'" title="'.$info_user->username.'">'.ucfirst($info_user->nickname).'</a>
+                <a href="profil.php?id='.$info_user->profil.'" title ="">@'.$info_user->username.'</a>
             </div>
             <div class="dashboard-stats">
                 <div class="search-about-user">
-                    <a title="Tweets" href="profil.php?id='.$info_user->id_user.'">
+                    <a title="Tweets" href="profil.php?id='.$info_user->profil.'">
                         <span class="describ-stats">À propos : </span>
                         <span class="biography-search">'.$info_user->biography.'</span>
                     </a>
