@@ -20,14 +20,14 @@ class Follow extends Auth {
 
 
     public function listFollowing($db, $user_id) {
-        return $db->query('SELECT * FROM users LEFT JOIN followers
+        return $db->query('SELECT users.*, followers.*, followers.id_user AS profil FROM users LEFT JOIN followers
             ON users.id_user = followers.id_user WHERE followers.id_follower = ? AND followers.date_follow > 0', [$user_id])->fetchAll();
     }
 
 
 
     public function listfollower($db, $user_id) {
-        return $db->query('SELECT * FROM users LEFT JOIN followers
+        return $db->query('SELECT users.*, followers.*, followers.id_follower AS profil FROM users LEFT JOIN followers
             ON followers.id_follower = users.id_user WHERE followers.id_user = ? AND followers.date_follow > 0', [$user_id])->fetchAll();
     }
 
@@ -100,6 +100,7 @@ class Follow extends Auth {
         $profil_following = '';
 
         foreach ($list as $info_user) {
+           // var_dump($info_user);die;
 
             $profil_following .=
         '<div class="result-user">
@@ -107,8 +108,10 @@ class Follow extends Auth {
                 <a href="profil.php?id='.$info_user->id_user.'" title="'.$info_user->username.'"><img src="'.$info_user->cover.'" alt="'.$info_user->username.'"></a>
             </div>
             <div class="dashboard-data">
-                <a href="profil.php?id='.$info_user->id_user.'" title="'.$info_user->username.'"><img src="'.$info_user->avatar.'" alt="'.$info_user->username.'"></a>
-            </div>
+                <a href="profil.php?id='.$info_user->profil.'" title="'.$info_user->username.'"><img src="'.$info_user->avatar.'" alt="'.$info_user->username.'"></a>
+               
+
+                </div>
             <div class="dashboard-user">
                 <a href="profil.php?id='.$info_user->id_user.'" title="'.$info_user->username.'">'.ucfirst($info_user->nickname).'</a>
                 <a href="profil.php?id='.$info_user->id_user.'" title ="">@'.$info_user->username.'</a>
