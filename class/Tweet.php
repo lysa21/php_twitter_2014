@@ -134,28 +134,15 @@ public function comparer($a, $b) {
     return strtotime($a->creation_date) - strtotime($b->creation_date);
 }
 
-public function Tweet_follower($id_user) {
-    $follow = new Follow($id_user);
-    $follower = new Auth($id_user);
-    $id_following = $follow->id_following($this->_db, $this->_id_user);
-    $tweet_followers = [];
+public function getTweetsFollowed($user_id) {
 
-    foreach ($id_following as $value) {
-        if(isset($_GET['lastid'])){
-            $followtweets = $this->getUserTweetsTimeline($this->_db, $value->abonnement);
-        } else {
-            $followtweets = $this->getUserTweets($this->_db, $value->abonnement);
-        }
-        foreach ($followtweets as $followtweet) {   
-            array_push($tweet_followers, $followtweet); 
-        }
-    }
-
-    usort($tweet_followers, array($this, 'comparer'));
-
-    $tweets = array_reverse($tweet_followers);
-    $affiche = '';
+    $tweets = $this->_db->query('SELECT * FROM tweets INNER JOIN users
+    LEFT JOIN followers ON tweets.id_user = followers.id_user WHERE followers.id_follower = ? AND followers.date_follow > 0 GROUP BY tweets.id_tweet', [$user_id])->fetchAll();
+$follower = new Auth($user_id);
+$affiche = '';
+//var_dump($tweets);die;
     foreach ($tweets as $tweet) {
+        //var_dump($tweet);die;
         $infofollow = $follower->checkId($this->_db, $tweet->id_user);
         $affiche .= $this->display($tweet, $infofollow);
     }

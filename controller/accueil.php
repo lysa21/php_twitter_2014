@@ -48,8 +48,8 @@ if (isset($_POST['submittweet'])) {
 	}
 }
 
-$initFollow = new Tweet($user_id);
-$result = $initFollow->Tweet_follower($user_id);
+$tweet = new Tweet($user_id);
+$result = $tweet->getTweetsFollowed($user_id);
 
 require_once '../view/accueil.php';
 ?>

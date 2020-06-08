@@ -7,11 +7,13 @@ class Auth {
 
     protected $session;
 
+    protected $path = '';
+
     public function __construct($session, $options = []) {
         $this->options = array_merge($this->options, $options);
         $this->session = $session;
-        $this->$path = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-        $this->$path .=$_SERVER["SERVER_NAME"];
+        $this->path = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+        $this->path .=$_SERVER["SERVER_NAME"];
      
 
     }
@@ -26,7 +28,7 @@ class Auth {
     }
 
     public function register($db, $username, $password, $email) {
-        $this->$path .= str_replace(dirname(__DIR__, 2), '', dirname(__DIR__, 1));
+        $this->path .= str_replace(dirname(__DIR__, 2), '', dirname(__DIR__, 1));
         $avatar = '../view/img-user/avatar/profil-man-default.png';
         $cover = '../view/img-user/cover/default-cover.jpg';
         $password = $this->hashPassword($password);
@@ -40,7 +42,7 @@ class Auth {
             $cover
             ]);
         $user_id = $db->lastInsertId();
-        mail($email, 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\n ". $this->$path . "/view/confirm.php?id_user=$user_id&token=$token");
+        mail($email, 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\n ". $this->path . "/view/confirm.php?id_user=$user_id&token=$token");
     }
 
     public function img_profil($db, $user_id, $image, $path) {
